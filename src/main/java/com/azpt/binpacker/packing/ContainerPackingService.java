@@ -2,6 +2,7 @@ package com.azpt.binpacker.packing;
 
 import com.azpt.binpacker.packing.domain.LoadedContainer;
 import com.azpt.binpacker.packing.domain.Bin;
+import com.azpt.binpacker.packing.domain.Order;
 import com.azpt.binpacker.packing.domain.VisualizationClass;
 import com.azpt.binpacker.packing.utils.Dims;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,7 +28,9 @@ public class ContainerPackingService implements ContainerPackingManager {
   long stop;
 
   @Override
-  public LoadedContainer getFinalPaletteComposition(List<Bin> binList, Dims outContainerDimensions) {
+  public LoadedContainer getFinalBinComposition(Order order, Dims outContainerDimensions) {
+
+    List<Bin> binList = order.getSingleBins();
 
     binList.sort(Comparator.comparingInt(Bin::getOutOrder)
       .thenComparingInt(Bin::getSize).reversed());
@@ -45,7 +48,7 @@ public class ContainerPackingService implements ContainerPackingManager {
     //
     for(int i = 0; i < Math.pow(2,maxOutOrder+1) ; i++){
       deepCopyBinList = new ArrayList<>(binList);
-      returnedResults = newApproach(generateNewContainersOrder(deepCopyBinList,i),outContainerDimensions,binsVisualization);
+      returnedResults = newApproach(generateNewContainersOrder(deepCopyBinList,i),outContainerDimensions);
       if(bestFit > returnedResults.getKey() && returnedResults.getKey() >= 0){
         bestFit = returnedResults.getKey();
         finalBinsVisualization = returnedResults.getValue();
@@ -97,14 +100,14 @@ public class ContainerPackingService implements ContainerPackingManager {
     return readyBinList;
   }
 
-  private Pair<Long,List<VisualizationClass>> newApproach(List<Bin> binList, Dims truckDimensions, List<VisualizationClass> palettesVisualization) {
+  private Pair<Long,List<VisualizationClass>> newApproach(List<Bin> binList, Dims truckDimensions) {
     int truckWidth = truckDimensions.getWidth();
     int truckDepth = truckDimensions.getDepth();
 
     Container truckContainer = new Container(0, 0, truckWidth, truckDepth);
     List<Container> usedSpace = new ArrayList<>();
     List<Pair<Integer, Integer>> possiblePlacementCoordinates = new ArrayList<>(List.of(new Pair<>(0, 0)));
-    palettesVisualization = new ArrayList<>();
+    List<VisualizationClass> binsVisualization = new ArrayList<>();
 
     boolean foundSpotFlag;
     long actualUsedSpace = 0;
@@ -112,8 +115,8 @@ public class ContainerPackingService implements ContainerPackingManager {
 
     for (Bin p : binList) {
 
-      int paletteWidth = p.getBinDimensions().getWidth();
-      int paletteDepth = p.getBinDimensions().getDepth();
+      int binWidth = p.getBinDimensions().getWidth();
+      int binDepth = p.getBinDimensions().getDepth();
       foundSpotFlag = false;
       Container tempContainer = new Container();
       int startX;
@@ -121,11 +124,10 @@ public class ContainerPackingService implements ContainerPackingManager {
       for (Pair<Integer, Integer> cords : possiblePlacementCoordinates) {
         startX = cords.getKey();
         startY = cords.getValue();
-        tempContainer = new Container(startX, startY, startX + paletteWidth, startY + paletteDepth);
+        tempContainer = new Container(startX, startY, startX + binWidth, startY + binDepth);
 
         if (!checkIfOverlaps(truckContainer, usedSpace, tempContainer)) {
 
-//          log.info("PALETA: "+p.getIdentifier() + " size "+p.getSize());
           int deadlineLength = calculateDeadlineLength(usedSpace,tempContainer,truckContainer);
           int smallestLengthNextIt = determineSmallestLengthNextIt(p.getOutOrder(), binList);
 
@@ -134,9 +136,9 @@ public class ContainerPackingService implements ContainerPackingManager {
           if (tempContainer.getEndY() > mostForwardDepthPoint) {
             mostForwardDepthPoint = tempContainer.getEndY();
           }
-          actualUsedSpace += (long) paletteWidth * paletteDepth;
-          palettesVisualization.add(new VisualizationClass(p.getIdentifier(), cords.getKey(), cords.getValue(), 0,
-            paletteWidth,paletteDepth,500));
+          actualUsedSpace += (long) binWidth * binDepth;
+          binsVisualization.add(new VisualizationClass(p.getIdentifier(), cords.getKey(), cords.getValue(), 0,
+            binWidth,binDepth,500));
 
           possiblePlacementCoordinates.remove(cords);
           break;
@@ -151,7 +153,7 @@ public class ContainerPackingService implements ContainerPackingManager {
 
     }
 
-    return new Pair<>((long) mostForwardDepthPoint * truckWidth - actualUsedSpace,palettesVisualization); //nieuzyte miejsce
+    return new Pair<>((long) mostForwardDepthPoint * truckWidth - actualUsedSpace,binsVisualization); //nieuzyte miejsce
 
   }
 
@@ -189,17 +191,17 @@ public class ContainerPackingService implements ContainerPackingManager {
   }
 
   private int calculateDeadlineLength(List<Container> usedSpace,
-                                         Container placedPalette,
+                                         Container placedBin,
                                          Container truckContainer ){
 
-    Container leftZone = new Container(truckContainer.startX, placedPalette.startY,
-      placedPalette.startX, placedPalette.endY);
+    Container leftZone = new Container(truckContainer.startX, placedBin.startY,
+      placedBin.startX, placedBin.endY);
 
-    Container rightZone = new Container(placedPalette.endX,placedPalette.startY,
-      truckContainer.endX, placedPalette.endY);
+    Container rightZone = new Container(placedBin.endX,placedBin.startY,
+      truckContainer.endX, placedBin.endY);
 
-    int minX = placedPalette.startX;
-    int maxX = placedPalette.endX;
+    int minX = placedBin.startX;
+    int maxX = placedBin.endX;
 
     for (Container c : usedSpace){
       if(checkIfContainsOrOverlaps(leftZone, c) || checkIfContainsOrOverlaps(rightZone, c)){

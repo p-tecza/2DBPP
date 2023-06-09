@@ -3,6 +3,7 @@ package com.azpt.binpacker;
 import com.azpt.binpacker.packing.ContainerPackingManager;
 import com.azpt.binpacker.packing.ContainerPackingService;
 import com.azpt.binpacker.packing.domain.Bin;
+import com.azpt.binpacker.packing.domain.Order;
 import com.azpt.binpacker.packing.utils.Dims;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -60,7 +61,7 @@ public class BinpackerApplication {
 
 		ContainerPackingManager tpm = new ContainerPackingService();
 
-		tpm.getFinalPaletteComposition(binList,truckDims);
+		tpm.getFinalBinComposition(Order.builder().singleBins(binList).build(),truckDims);
 	}
 
 }
