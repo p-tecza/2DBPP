@@ -18,4 +18,16 @@ public class Bin {
   public int getSize(){
     return this.binDimensions.getWidth()*this.binDimensions.getDepth();
   }
+
+  @Override
+  public String toString(){
+    return "BIN: " +
+            "ID: " +
+            this.getIdentifier() +
+            " OUT ORDER: " +
+            this.getOutOrder() +
+            " " +
+            this.getBinDimensions().toString() +
+            " SIZE: "+this.getSize();
+  }
 }

@@ -11,4 +11,9 @@ public class Dims {
   private int width;
   private int height;
   private int depth;
+
+  @Override
+  public String toString(){
+    return "W:"+ width + " D: " + depth + " H: "+ height;
+  }
 }
