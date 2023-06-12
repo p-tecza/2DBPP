@@ -1,6 +1,7 @@
 package com.azpt.binpacker.packing;
 
 import com.azpt.binpacker.packing.domain.*;
+import com.azpt.binpacker.packing.graphics.ContainerDrawer;
 import com.azpt.binpacker.packing.utils.Dims;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.util.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class ContainerPackingService implements ContainerPackingManager {
     long start = System.currentTimeMillis();
     long stop;
+
+    ContainerDrawer drawer = new ContainerDrawer();
 
     @Override
     public LoadedContainer getFinalBinComposition(Order order, Dims outContainerDimensions) {
@@ -60,6 +64,8 @@ public class ContainerPackingService implements ContainerPackingManager {
         stop = System.currentTimeMillis();
         log.info("OVERALL TIME: " + (stop - start));
         log.info(json);
+
+        drawer.draw(finalBinsVisualization);
 
         return null;
     }

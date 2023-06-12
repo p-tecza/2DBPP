@@ -9,7 +9,9 @@ import com.azpt.binpacker.packing.utils.Dims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.EventListener;
 
 import java.util.ArrayList;
@@ -20,7 +22,12 @@ import java.util.List;
 public class BinpackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BinpackerApplication.class, args);
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(BinpackerApplication.class);
+
+		builder.headless(false);
+
+		ConfigurableApplicationContext context = builder.run(args);
+//		SpringApplication.run(BinpackerApplication.class, args);
 	}
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() {
