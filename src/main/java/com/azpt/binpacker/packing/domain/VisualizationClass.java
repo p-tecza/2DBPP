@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class VisualizationClass {
   private int id;
+  private int outOrder;
   private int x;
   private int y;
   private int z;
   private int dx;
   private int dy;
   private int dz;
-
 }

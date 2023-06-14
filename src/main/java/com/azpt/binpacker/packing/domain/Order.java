@@ -22,15 +22,19 @@ public class Order {
         }
         returnString.append("BIN PACKETS:\n");
         int it = 0;
-        for (BinPacket bp : packets) {
-            returnString.append("NR ");
-            returnString.append(it++);
-            returnString.append("[\n");
-            for (Bin b : bp.getBins()) {
-                returnString.append(b.toString());
-                returnString.append("\n");
+        if (this.packets != null) {
+
+
+            for (BinPacket bp : packets) {
+                returnString.append("NR ");
+                returnString.append(it++);
+                returnString.append("[\n");
+                for (Bin b : bp.getBins()) {
+                    returnString.append(b.toString());
+                    returnString.append("\n");
+                }
+                returnString.append("]\n");
             }
-            returnString.append("]\n");
         }
         return returnString.toString();
     }

@@ -34,78 +34,169 @@ public class BinpackerApplication {
 		Dims truckDims = new Dims(2400,2400,26000);
 
 		List<Bin> binList = new ArrayList<>();
-		List<Bin> binList2 = new ArrayList<>();
-		List<Bin> binList3 = new ArrayList<>();
-		binList.add(Bin.builder()
-						.outOrder(1)
-						.binDimensions(new Dims(1000,1000,2000))
-						.identifier(1)
-						.rotatable(false)
-						.stackable(false).build());
 
-		binList.add(Bin.builder()
-				.outOrder(2)
-				.binDimensions(new Dims(2000,1000,4000))
+		List<Bin> binList3 = new ArrayList<>();
+//		binList.add(Bin.builder()
+//						.outOrder(1)
+//						.binDimensions(new Dims(1000,1200,2000))
+//						.identifier(1)
+//						.rotatable(false)
+//						.stackable(false).build());
+//
+
+		List<Bin> binList2 = new ArrayList<>();
+
+		binList2.add(Bin.builder()
+				.outOrder(0)
+				.binDimensions(new Dims(600,1000,1200))
+				.identifier(1)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(0)
+				.binDimensions(new Dims(400,1000,1200))
 				.identifier(2)
 				.rotatable(false)
 				.stackable(false).build());
-
-		binList.add(Bin.builder()
-				.outOrder(1)
-				.binDimensions(new Dims(800,1000,1200))
+		binList2.add(Bin.builder()
+				.outOrder(0)
+				.binDimensions(new Dims(400,1000,1200))
 				.identifier(3)
 				.rotatable(false)
 				.stackable(false).build());
-
-		binList.add(Bin.builder()
-				.outOrder(3)
-				.binDimensions(new Dims(600,1000,800))
+		binList2.add(Bin.builder()
+				.outOrder(0)
+				.binDimensions(new Dims(400,1000,1200))
 				.identifier(4)
 				.rotatable(false)
 				.stackable(false).build());
-
-		binList.add(Bin.builder()
+		binList2.add(Bin.builder()
 				.outOrder(1)
-				.binDimensions(new Dims(2000,1000,1200))
+				.binDimensions(new Dims(400,1000,1200))
 				.identifier(5)
 				.rotatable(false)
 				.stackable(false).build());
 
-
 		binList2.add(Bin.builder()
 				.outOrder(1)
-				.binDimensions(new Dims(800,1000,1200))
+				.binDimensions(new Dims(600,1000,800))
 				.identifier(6)
 				.rotatable(false)
 				.stackable(false).build());
 
 		binList2.add(Bin.builder()
-				.outOrder(3)
-				.binDimensions(new Dims(600,1000,800))
+				.outOrder(1)
+				.binDimensions(new Dims(600,1000,1200))
 				.identifier(7)
 				.rotatable(false)
 				.stackable(false).build());
 
-		binList2.add(Bin.builder()
-				.outOrder(1)
-				.binDimensions(new Dims(2000,1000,1200))
-				.identifier(8)
-				.rotatable(false)
-				.stackable(false).build());
 
-		binList3.add(Bin.builder()
+		binList2.add(Bin.builder()
 				.outOrder(1)
 				.binDimensions(new Dims(800,1000,1200))
 				.identifier(8)
 				.rotatable(false)
 				.stackable(false).build());
 
-		binList3.add(Bin.builder()
-				.outOrder(3)
-				.binDimensions(new Dims(600,1000,800))
+		binList2.add(Bin.builder()
+				.outOrder(2)
+				.binDimensions(new Dims(1000,1000,800))
 				.identifier(9)
 				.rotatable(false)
 				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(2)
+				.binDimensions(new Dims(600,800,1000))
+				.identifier(10)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(2)
+				.binDimensions(new Dims(1200,1000,800))
+				.identifier(11)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(2)
+				.binDimensions(new Dims(1000,1000,800))
+				.identifier(12)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(3)
+				.binDimensions(new Dims(2200,1000,1000))
+				.identifier(13)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(3)
+				.binDimensions(new Dims(1000,1000,800))
+				.identifier(14)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(3)
+				.binDimensions(new Dims(1000,1000,800))
+				.identifier(15)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(3)
+				.binDimensions(new Dims(600,1000,1000))
+				.identifier(16)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(4)
+				.binDimensions(new Dims(600,1000,1000))
+				.identifier(17)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(4)
+				.binDimensions(new Dims(1200,1000,2000))
+				.identifier(18)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(4)
+				.binDimensions(new Dims(1600,1000,1000))
+				.identifier(19)
+				.rotatable(false)
+				.stackable(false).build());
+
+		binList2.add(Bin.builder()
+				.outOrder(4)
+				.binDimensions(new Dims(2000,1000,600))
+				.identifier(20)
+				.rotatable(false)
+				.stackable(false).build());
+
+//		binList3.add(Bin.builder()
+//				.outOrder(1)
+//				.binDimensions(new Dims(800,1000,1200))
+//				.identifier(9)
+//				.rotatable(false)
+//				.stackable(false).build());
+//
+//		binList3.add(Bin.builder()
+//				.outOrder(3)
+//				.binDimensions(new Dims(600,1000,800))
+//				.identifier(10)
+//				.rotatable(false)
+//				.stackable(false).build());
 
 
 		BinPacket bp = BinPacket.builder().bins(binList).outOrder(1).build();
@@ -119,11 +210,10 @@ public class BinpackerApplication {
 
 		Order newOrder = Order.builder().singleBins(binList2).packets(packets).build();
 
-
 		log.info("ORDER: ");
 		log.info(newOrder.toString());
 
-		tpm.getFinalBinComposition(newOrder,truckDims);
+		tpm.getFinalBinComposition(newOrder, truckDims);
 
 
 	}
